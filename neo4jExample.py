@@ -65,10 +65,11 @@ if __name__ == "__main__":
     # See https://neo4j.com/developer/aura-connect-driver/ for Aura specific connection URL.
     scheme = "neo4j"  # Connecting to Aura, use the "neo4j+s" URI scheme
     host_name = "localhost"
-    port = 7687
+    port = 7687  # Bolt Port https://neo4j.com/docs/operations-manual/current/configuration/ports/ | .NET | Java | JavaScript | Go | Python
+
     url = "{scheme}://{host_name}:{port}".format(scheme=scheme, host_name=host_name, port=port)
     user = 'neo4j' # "<Username for Neo4j database>"
-    password = 'EaDgHe!1' # "<Password for Neo4j database>"
+    password = 'neo4j' # "<Password for Neo4j database>"
     app = App(url, user, password)
     app.create_friendship("Alice", "David")
     app.find_person("Alice")
