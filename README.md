@@ -6,6 +6,11 @@ Neo4j in Windows 10 64 Bit.
 
 **@author**: Leander Féret
 
+## Neo4j Nutzer und Passwort dieses Tutorials
+
+Nutzer: ```neo4j```
+Passwort: ```neo4j```
+
 # Installiere Python3
 
 Für dieses Tutorial wurde Python3 in der Version 3.9 verwendet. Sollte diese nicht bereits auf
