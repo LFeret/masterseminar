@@ -19,8 +19,8 @@ persons = [
 addresses = [ f'Musterstraße {i}' for i in range(1,11)]
 accounts = [ f'Bank Account {i}' for i in range(1, 14)]
 phones = [f'Phone Number {i}' for i in range(1,12)]
-creditcards = [f'Credit Card Number {i}' for i in range(1,7)]
-socialsecuritynumbers = [f'SSN {i}' for i in range(1,12)]
+creditcards = [f'Credit Card Number {i}' for i in range(1,14)]
+socialsecuritynumbers = [f'SSN {i}' for i in range(1,10)]
 
 
 nodes = {
