@@ -16,6 +16,21 @@ persons = [
     'Sebastian'
 ]
 
+addresses = [ f'Musterstraße {i}' for i in range(1,11)]
+accounts = [ f'Bank Account {i}' for i in range(1, 14)]
+phones = [f'Phone Number {i}' for i in range(1,12)]
+creditcards = [f'Credit Card Number {i}' for i in range(1,7)]
+socialsecuritynumbers = [f'SSN {i}' for i in range(1,12)]
+
+
+nodes = {
+    'Person':('name', persons),
+    'Address':('address', addresses),
+    'BankAccount':('account', accounts),
+    'CreditCard':('number', creditcards),
+    'SSN':('ssn', socialsecuritynumbers)
+}
+
 
 if __name__ == "__main__":
     # See https://neo4j.com/developer/aura-connect-driver/ for Aura specific connection URL.
@@ -28,9 +43,12 @@ if __name__ == "__main__":
     password = 'neo4j'
     db_helper = DbHelper(url, user, password)
 
-    for name in persons:
-        db_helper.run_query(
-            'CREATE (person:Person {name: "' + name + '" }) RETURN person.name'
-        )
+    for Label, values in nodes.items():
+        PropertyKey = values[0]
+        for PropertyValue in values[1]:
+            # Auch über eine Query Syntax mit Create (), (), () möglich!
+            db_helper.run_query(
+                'CREATE (node:' + Label + ' {' + PropertyKey + ': "' + PropertyValue + '" }) RETURN node.' + PropertyKey
+            )
 
     db_helper.close()
