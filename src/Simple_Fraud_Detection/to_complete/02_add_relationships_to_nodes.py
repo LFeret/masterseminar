@@ -1,4 +1,10 @@
-from DbHelper import DbHelper
+import os
+import sys
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+)
+
+from src.DbHelper import DbHelper
 
 persons = [
     'Lucy',
@@ -67,11 +73,12 @@ if __name__ == "__main__":
             except IndexError:
                 PropertyValue2 = nodes2[-1]
 
-            query = 'MATCH '
-            query += f'(a:{Label1}),(b:{Label2}) '
-            query += f'WHERE a.{PropertyKey1} = "{PropertyValue1}" AND b.{PropertyKey2} = "{PropertyValue2}" '
-            query += f'CREATE (a)-[r:{RelationshipType}]->(b) '
-            query += 'RETURN type(r)'
+            # TODO: Build a Cypher-Statement, that creates a relationship betweeen two nodes with Label1 and Label2
+            # TODO: in which PropertyKey1 and PropertyValue1 from first Node matches and
+            # TODO: PropertyKey2 and ProeprtyValue2 from second Node matches
+            # TODO: The Created Relationship should have the Type of the Variable RelationshipType!
+            # TODO: The Cypher should return a usefull information of the created Objects, like for example its type(r)
+            query = 'TODO: Create me :)'
 
             db_helper.run_query(
                 query

@@ -1,4 +1,9 @@
-from DbHelper import DbHelper
+import os
+import sys
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+)
+from src.DbHelper import DbHelper
 
 persons = [
     'Lucy',
@@ -46,9 +51,8 @@ if __name__ == "__main__":
     for Label, values in nodes.items():
         PropertyKey = values[0]
         for PropertyValue in values[1]:
-            # Auch über eine Query Syntax mit Create (), (), () möglich!
             db_helper.run_query(
-                'CREATE (node:' + Label + ' {' + PropertyKey + ': "' + PropertyValue + '" }) RETURN node.' + PropertyKey
+                # TODO: Build a Cypher-Statement, that creates a node with Label, PropertyKey and PropertyValue and returns the PropertyKey from the new Node
             )
 
     db_helper.close()
