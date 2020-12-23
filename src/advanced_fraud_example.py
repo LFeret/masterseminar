@@ -1,4 +1,6 @@
+import random
 from DbHelper import DbHelper
+
 
 persons = [
     'Lucy',
@@ -16,11 +18,20 @@ persons = [
     'Sebastian'
 ]
 
-addresses = [ f'Musterstraße {i}' for i in range(1,11)]
-accounts = [ f'Bank Account {i}' for i in range(1, 14)]
-phones = [f'Phone Number {i}' for i in range(1,12)]
-creditcards = [f'Credit Card Number {i}' for i in range(1,14)]
-socialsecuritynumbers = [f'SSN {i}' for i in range(1,10)]
+addresses = [ f'Musterstraße {i}' for i in range(1, random.randrange(5, 14))]
+accounts = [ f'Bank Account {i}' for i in range(1, random.randrange(5, 14))]
+phones = [f'Phone Number {i}' for i in range(1, random.randrange(5, 14))]
+creditcards = [f'Credit Card Number {i}' for i in range(1, random.randrange(5, 14))]
+socialsecuritynumbers = [f'SSN {i}' for i in range(1, random.randrange(5, 14))]
+
+
+nodes = {
+    'Person':('name', persons),
+    'Address':('address', addresses),
+    'BankAccount':('account', accounts),
+    'CreditCard':('number', creditcards),
+    'SSN':('ssn', socialsecuritynumbers)
+}
 
 
 relationships = {
@@ -41,6 +52,21 @@ if __name__ == "__main__":
     password = 'neo4j'
     db_helper = DbHelper(url, user, password)
 
+    # 01. clear db
+    db_helper.run_query(
+        'MATCH (n) DETACH DELETE n'
+    )
+
+    # 02. fill database
+    for Label, values in nodes.items():
+        PropertyKey = values[0]
+        for PropertyValue in values[1]:
+            # Auch über eine Query Syntax mit Create (), (), () möglich!
+            db_helper.run_query(
+                'CREATE (node:' + Label + ' {' + PropertyKey + ': "' + PropertyValue + '" }) RETURN node.' + PropertyKey
+            )
+
+    # 03. create random relationships
     for RelationshipType, values in relationships.items():
         node1 = values[0]
         node2 = values[1]
@@ -50,6 +76,8 @@ if __name__ == "__main__":
         PropertyKey2 = node2[1]
         nodes1 = node1[2]
         nodes2 = node2[2]
+        random.shuffle(nodes1)
+        random.shuffle(nodes2)
 
         itermax = len(nodes1) if len(nodes1) > len(nodes2) else len(nodes2) 
 
@@ -76,5 +104,24 @@ if __name__ == "__main__":
             db_helper.run_query(
                 query
             )
+    
+    # 04. look for frauds
+    query = '''
+    MATCH       (person:Person)-[]->(contactInformation)
+    WITH        contactInformation,
+                count(person) AS RingSize
+    MATCH       (contactInformation)<-[]-(person)
+    WITH        collect(person.name) AS persons,
+                contactInformation, RingSize
+    WHERE       RingSize > 1
+    RETURN      persons AS FraudRing,
+                labels(contactInformation) AS ContactType,
+                RingSize
+    ORDER BY    RingSize DESC 
+    '''
+
+    db_helper.run_query(
+        query
+    )
 
     db_helper.close()
