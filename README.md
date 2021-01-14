@@ -157,7 +157,7 @@ Ebenso sollte das Ergebnis im Neo4j Browser geprüft werden. Vergleichsbild ist 
 
 zu finden.
 
-## 02_fill_fraud_db_with_nodes.py
+## 02_add_relationships_to_nodes.py
 
 Öffne die Datei 01 und schreibe den Cypher-Befehl über korrekten Python-Code an der über 
 das ```TODO``` gekennzeichnete Stelle.
