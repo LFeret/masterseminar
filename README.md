@@ -137,6 +137,8 @@ Hier befinden sich drei Python Scripts.
 
 Hierbei müssen aber nur Datei 01 und Datei 02 angepasst werden.
 
+Über ```'MATCH (n) return n'``` kann man sich sein Ergebnis im neo4j-Browser ansehen.
+
 ## 01_fill_fraud_db_with_nodes.py
 
 Öffne die Datei 01 und schreibe den Cypher-Befehl über korrekten Python-Code an der über 
